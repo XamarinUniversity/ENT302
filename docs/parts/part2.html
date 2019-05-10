@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <title>
+			Exercise 2: Query a Standard Object
+		</title>
+    <link rel="stylesheet" type="text/css" href="./res/styles/normalize.css">
+    <link rel="stylesheet" type="text/css" href="./res/styles/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="./res/styles/styles.css">
+</head>
+
+<body>
+    <!-- Use the same title as the StartHere -->
+    <header>Using the Xamarin Salesforce Component</header>
+
+   	<section id="main">
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h1 id="page-title"></h1>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Duration</h2>
+		<p>
+			15 minutes
+		</p>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Goals</h2>
+
+		<p>
+			The goal of this lab is to query one of standard Salesforce Objects and display the results. The UI will be minimal
+			so you can spend more of your time on Salesforce-related code.
+		</p>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Required assets</h2>
+		<p>
+			The provided <strong>Resources</strong> folder for this exercise contains a subfolder named <strong>Completed</strong>
+            with a solution you can use to check your work.
+
+            This lab is a continuation of the previous one. If you did not complete the previous exercise, you can use the
+            <strong>Completed</strong> solution from the previous part as starter code for this part.
+		</p>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Exercise overview</h2>
+            This exercise is a continuation of the previous one. Here you will:
+    		<ol>
+				<li>
+					Select the <strong>Id</strong>, <strong>Name</strong>, and <strong>CreatedDate</strong> fields from
+					the Standard Salesforce Object named <strong>Campaign</strong>.
+				</li>
+				<li>
+					Load the results into a <code>ListView</code>.
+				</li>
+			</ol>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h1>Steps</h1>
+		<p>
+			Below are the step-by-step instructions to implement the exercise.
+		</p>
+
+		<h2>Run a query and display the results</h2>
+		<p>
+			Here you will SELECT the <strong>Id</strong>, <strong>Name</strong>, and <strong>CreatedDate</strong> fields from
+			the Standard Salesforce Object named <strong>Campaign</strong> and load the results into the <code>ListView</code>.
+		</p>
+
+		<ol>
+			<li>
+				Take a moment to quickly review the <a target="_blank" href="http://www.salesforce.com/developer/docs/api/Content/sforce_api_objects_campaign.htm">documentation</a>
+				for the Campaign Object. In particular, locate the <strong>Name</strong> field in the documentation as it will be one of the fields you will query.
+			</li>
+
+			<li>
+				Your query will also include the fields <strong>Id</strong> and <strong>CreatedDate</strong>. These two are
+				<a target="_blank" href="http://www.salesforce.com/developer/docs/api/Content/system_fields.htm">Standard Fields</a>
+				which are included in nearly every Salesforce Object.
+			</li>
+
+			<li>
+				<a target="_blank" href="https://login.salesforce.com/">Login</a> to your Salesforce account. Click on the <strong>Campaigns</strong>
+				tab. View <strong>All Active Campaigns</strong> to familiarize yourself with the sample data; this should help you determine if
+				your query was successful.
+			</li>
+
+            <li>
+                Open <code>CampaignsPage.cs</code>.
+            </li>
+
+			<li>
+				Add the method shown below to the <code>CampaignsPage</code> class.
+<pre class="prettyprint codeblock">
+async Task&lt;List&lt;SObject&gt;&gt; GetCampaignSObjectsAsync()
+{
+   ...
+}</pre>
+			</li>
+      <li>
+        Complete the implementation so it runs a query to select the <strong>Id</strong>, <strong>Name</strong>, and <strong>CreatedDate</strong>
+              from <strong>Campaign</strong>.<br>
+              <code>"SELECT Id, Name, CreatedDate FROM CAMPAIGN"</code>
+              <br>
+              Then use your <code>SalesforceClient</code> object to execute the query (recall that the <code>SalesforceClient</code>
+              object is available in a public property of your <code>App</code> class. Finally, covert the <code>IEnumerable</code>
+              result to a list (you can use the LINQ extension method <code>ToList</code> for the conversion) and return the list.
+      </li>
+
+			<li>
+				Call your new <code>GetCampaignSObjectsAsync</code> method from the provided <code>Run</code> method.
+              Load the results into the <code>ItemsSource</code> property of the <code>ListView</code> that is declared inside
+              the <code>CampaignsPage</code> class.
+			</li>
+
+			<li>
+				Run the app on at least one platform to test your work. The <code>ListView</code> will call <code>ToString</code>
+				on the <code>SObject</code>s returned from the query so the output will not look very interesting. However, you
+				should see the Id of each returned campaign and be able to verify the number of returned items matches the
+				number of active campaigns you saw in the web interface.
+			</li>
+		</ol>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h1>Summary</h1>
+		<p>
+			You now have a basic app up and running: users can login to their Salesforce account and view their data.
+		</p>
+		<div class="align-right">
+			<a href="../Start%20Here.html">Go Back</a>
+		</div>
+	</section>
+
+    <script src="./res/js/jquery.min.js"></script>
+    <script src="./res/js/prettify.js"></script>
+    <script src="./res/js/script.js"></script>
+
+    <footer>Copyright (C) 2018 Xamarin Inc., Microsoft.</footer>
+</body>
+</html>
