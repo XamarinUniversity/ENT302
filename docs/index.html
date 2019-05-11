@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <title>Using the Xamarin Salesforce Component</title>
+    <link rel="stylesheet" type="text/css" href="./parts/res/styles/normalize.css">
+    <link rel="stylesheet" type="text/css" href="./parts/res/styles/prettify.css">
+    <link rel="stylesheet" type="text/css" href="./parts/res/styles/styles.css">
+</head>
+
+<body>
+    <!-- This will be filled in at runtime -->
+    <header role="course-title"></header>
+
+   	<section id="main">
+
+		<h2>Before you begin</h2>
+		<p>
+			This class uses a Xamarin.Forms application to demonstrate using the Xamarin Salesforce Component. To complete the exercises, you will need a Xamarin development environment setup and a simulator/emulator or a physical device for Android and/or iOS. Read through the <a href="https://university.xamarin.com/resources/setup-requirements">Setup Guidelines</a> if you need help with your development environment.
+		</p>
+
+		<div class="hintblock">
+			<b>Note:</b> You must also have a Salesforce Connected App in your Salesforce Environment to do the exercises in this course. Please make sure you have your Connected App's <strong>Client Id</strong>, <strong>Client Secret</strong>, and <strong>Callback URL</strong> available before starting this course.
+		</div>
+
+		<h2>Overview</h2>
+		<p>
+			This course shows how to use the Salesforce Component to authenticate a user, perform CRUD operations, and execute searches.
+		</p>
+
+		<h2>Objectives</h2>
+		<ol>
+			<li>Implement an external app and authenticate a user</li>
+			<li>Perform CRUD operations on a Standard Object</li>
+			<li>Create a custom SObject</li>
+			<li>Perform a Search</li>
+		</ol>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Lecture</h2>
+		<p><a href="./parts/slides.pdf">ENT302 - Using the Xamarin Salesforce Component</a>.</p>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Exercises</h2>
+
+		<div class="hintblock">
+			<strong>Tip:</strong> If you are doing these exercises live in a session, make sure to make good use of the instructor,
+			they are online to answer any questions you have!
+		</div>
+
+		<p>
+			Exercise materials are available from <a href="https://github.com/XamarinUniversity/ENT302/">GitHub</a>. The code can be cloned through a desktop Git client or <a href="https://github.com/XamarinUniversity/ENT302/archive/master.zip">downloaded directly</a> as a ZIP file.
+		</p>
+		<ol>
+			<li>
+				<div class="objective">Implement an external app and authenticate a user</div>
+				<a href="./parts/part1.html">Exercise</a>
+				<br />
+				In this exercise, you will let the user login to their Salesforce account through your app.
+            </li>
+
+			<li>
+				<div class="objective">Query a Standard Object</div>
+				<a href="./parts/part2.html">Exercise</a>
+				<br />
+				Here you will use SalesforceClient to execute a SELECT query against one of the standard Salesforce objects.
+            </li>
+
+			<li>
+				<div class="objective">Create a custom SObject</div>
+				<a href="./parts/part3.html">Exercise</a>
+				<br />
+				Now that you have a collection of SObjects in your app, it is time to write a custom wrapper class
+				to make the data easier to work with.
+            </li>
+
+			<li>
+				<div class="objective">Perform a search</div>
+				<a href="./parts/part4.html">Exercise</a>
+				<br />
+				A SELECT statement can only search within a single table. Here, you will use FIND to run a search
+				across multiple tables.
+            </li>
+		</ol>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Additional resources</h2>
+
+        <p>
+		<a target="_blank" href="https://github.com/xamarin/SalesforceSDK">Salesforce Component on GitHub</a>
+        <br />
+		<a target="_blank" href="http://www.salesforce.com/us/developer/docs/fundamentals/salesforce_creating_on_demand_apps.pdf">Salesforce.com Platform Fundamentals (PDF)</a>
+        </p>
+
+		<br />
+
+	</section>
+
+    <script src="./parts/res/js/jquery.min.js"></script>
+    <script src="./parts/res/js/prettify.js"></script>
+    <script src="./parts/res/js/script.js"></script>
+
+    <footer>Copyright (C) 2018 Xamarin Inc., Microsoft.<br><a target="_blank" href="http://university.xamarin.com">Visit Xamarin University for more classes and content</a></footer>
+</body>
+</html>
+

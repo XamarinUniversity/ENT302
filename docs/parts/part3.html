@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <title>
+			Exercise 3: Create a custom SObject
+		</title>
+    <link rel="stylesheet" type="text/css" href="./res/styles/normalize.css">
+    <link rel="stylesheet" type="text/css" href="./res/styles/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="./res/styles/styles.css">
+</head>
+
+<body>
+    <!-- Use the same title as the StartHere -->
+    <header>Using the Xamarin Salesforce Component</header>
+
+   	<section id="main">
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h1 id="page-title"></h1>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Duration</h2>
+		<p>
+			20 minutes
+		</p>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Goals</h2>
+
+		<p>
+			Working with <code>SObject</code> directly is tedious and error prone. Here you will code a custom derived class
+			to simplify your client code.
+		</p>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Required assets</h2>
+		<p>
+            The provided <strong>Resources</strong> folder for this exercise contains a subfolder named <strong>Completed</strong>
+            with a solution you can use to check your work.
+
+            This lab is a continuation of the previous one. If you did not complete the previous exercise, you can use the
+            <strong>Completed</strong> solution from the previous part as starter code for this part.
+		</p>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Exercise overview</h2>
+        This exercise is a continuation of the previous one. Here you will:
+		<ol>
+			<li>Create a derived class of <code>SObject</code> named <code>Campaign</code>.</li>
+			<li>Provide a property for each field you will use in your client app.</li>
+			<li>Override <code>ResourceName</code>.</li>
+			<li>Handle the <code>PreparingUpdateRequest</code> event.</li>
+		</ol>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h1>Steps</h1>
+		<p>
+			Below are the step-by-step instructions to implement the exercise.
+		</p>
+
+		<h2>Create a custom SObject</h2>
+		<ol>
+			<li>
+				Add a new class named <code>Campaign</code> to the <strong>MyCampaigns</strong> project.
+			</li>
+			<li>
+				Derive <code>Campaign</code> from the <code>SObject</code> base class.
+			</li>
+			<li>
+				Add a read/write property of type <code>string</code> for <code>Name</code>. Remember to use the <code>Options</code>
+				dictionary that you inherited from <code>SObject</code> as the backing store for the property value.
+				The completed code is given below (but hidden so you can try it first without seeing the solution).
+         </li>
+<p class="indent-none">
+<a href="#" onclick="toggleCode(this,'NameProperty');return false;" class="uiitem">Show Code</a>
+<div class="indent-none" id="NameProperty" style="display:none;">
+<pre class="prettyprint">
+public string Name
+{
+  get { return this.Options["Name"]; }
+  set { this.Options["Name"] = value; }
+}
+</pre>
+</div>
+</p>
+
+			<li>
+				Add a <code>read-only</code> property for <code>CreatedDate</code>. To keep things simple, use
+				<code>string</code> for the property type.
+			</li>
+
+			<li>
+				Override the <code>ResourceName</code> property. Your getter should return the hardcoded string "Campaign"
+				which is the name of the Salesforce Object this class represents (i.e. the table name). Leave the
+				setter empty, this value isn't something the client code will need to change.
+			</li>
+
+			<li>
+				Add a default constructor to your <code>Campaign</code> class. Inside the constructor, subscribe to the
+				<code>PreparingUpdateRequest</code> event that you inherit from <code>SObject</code>. In your handler,
+				remove the <code>CreatedDate</code> field from the <code>UpdateData</code> in the event args (this is
+				a read-only field inside Salesforce and you would not want to send a value to Salesforce in an update
+				operation).
+			</li>
+
+			<li>
+				Override <code>ToString</code>. A sample implementation is give below to save time.
+<pre class="prettyprint codeblock">
+public override string ToString()
+{
+  return string.Format("[Campaign: Name={0}, CreatedDate={1}]", Name, CreatedDate);
+}
+</pre>
+			</li>
+
+		</ol>
+
+		<h2>Use your custom SObject</h2>
+
+		<ol>
+            <li>
+                Open <code>CampaignsPage.cs</code>.
+            </li>
+
+			<li>
+				Add the method shown below to the <code>CampaignsPage</code> class and complete the implementation.
+                Your goal is to use the <code>As</code> type-conversion
+				method to convert each of the SObjects returned from into a <code>Campaign</code> objects. You can do this 
+				one-at-a-time using a loop or all-at-once using LINQ. 
+<pre class="prettyprint codeblock">
+async Task&lt;List&lt;Campaign&gt;&gt; GetCampaignCustomObjectsAsync()
+{
+  var sobjects = await GetCampaignSObjectsAsync();
+
+  // convert the SObjects into Campaign objects and return the resulting list
+  // ...
+}
+</pre>
+
+For convenience, the LINQ version of the solution is provided here:
+         </li>
+
+<p class="indent-none">
+<a href="#" onclick="toggleCode(this,'LinqVersion');return false;" class="uiitem">Show Code</a>
+<div class="indent-none" id="LinqVersion" style="display:none;">
+<pre class="prettyprint">
+var sobjects = await GetCampaignSObjectsAsync();
+var campaigns = sobjects.Select(c => c.As&lt;Campaign&gt;());
+</pre>
+</div>
+</p>
+            <li>
+                Call your new <code>GetCampaignCustomObjectsAsync</code> method from the provided <code>Run</code> method.
+                Load the results into the <code>ItemsSource</code> property of the <code>ListView</code> that is declared inside
+                the <code>CampaignsPage</code> class.
+            </li>
+
+			<li>
+				Run the app on at least one platform to test your work.
+			</li>
+		</ol>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h1>Summary</h1>
+		<p>
+			A custom SObject-derived class makes your client code much easier to use (e.g. named properties) and less error prone
+			(e.g. you cannot forget to set the <code>ResourceName</code>). You should consider this technique for each Salesforce
+			Object you work with: the code is not very long and there's not a significant performance penalty since the type
+			conversion method does not need to copy the property values.
+		</p>
+		<div class="align-right">
+			<a href="../Start%20Here.html">Go Back</a>
+		</div>
+	</section>
+
+    <script src="./res/js/jquery.min.js"></script>
+    <script src="./res/js/prettify.js"></script>
+    <script src="./res/js/script.js"></script>
+
+    <footer>Copyright (C) 2018 Xamarin Inc., Microsoft.</footer>
+</body>
+</html>

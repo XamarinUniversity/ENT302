@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+    <title>
+			Exercise 4: Perform a search
+		</title>
+    <link rel="stylesheet" type="text/css" href="./res/styles/normalize.css">
+    <link rel="stylesheet" type="text/css" href="./res/styles/prettify.css" />
+    <link rel="stylesheet" type="text/css" href="./res/styles/styles.css">
+</head>
+
+<body>
+    <!-- Use the same title as the StartHere -->
+    <header>Using the Xamarin Salesforce Component</header>
+
+   	<section id="main">
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h1 id="page-title"></h1>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Duration</h2>
+		<p>
+			10 minutes
+		</p>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Goals</h2>
+
+		<p>
+			Execute a FIND statement and display the results. For simplicity, we will display the returned Ids and Object names
+			but will not use the Ids in SELECT statements to get the matching data.
+		</p>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Required assets</h2>
+		<p>
+            The provided <strong>Resources</strong> folder for this exercise contains a subfolder named <strong>Completed</strong>
+            with a solution you can use to check your work.
+
+            This lab is a continuation of the previous one. If you did not complete the previous exercise, you can use the
+            <strong>Completed</strong> solution from the previous part as starter code for this part.
+		</p>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h2>Exercise overview</h2>
+            This exercise is a continuation of the previous one. Here you will:
+			<ol>
+				<li>Search for the term "International" in the Campaign and Lead Salesforce Objects.</li>
+				<li>Convert the returned <code>SearchResult</code> objects to strings.</li>
+				<li>Display the strings to the user.</li>
+			</ol>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h1>Steps</h1>
+		<p>
+			Below are the step-by-step instructions to implement the exercise.
+		</p>
+
+		<h2>Run a SOSL search</h2>
+		<ol>
+            <li>
+                Open <code>CampaignsPage.cs</code>.
+            </li>
+
+            <li>
+                Add the method shown below to the <code>CampaignsPage</code> class. Your goal is to complete the implementation
+                using the additional instructions below.
+<pre class="prettyprint codeblock">
+async Task&lt;List&lt;string&gt;&gt; GetSearchResultsAsync()
+{
+  ...
+}
+</pre>
+            </li>
+
+            <li>
+				Write a SOSL query that uses <code>FIND</code> to locate the term "International" in the <code>NAME FIELDS</code> of the
+				<code>Campaign</code> and <code>Lead</code> Salesforce Objects.
+				The solution is provided here, hidden behind a link:
+<a href="#" onclick="toggleCode(this,'SOQL');return false;" class="uiitem">Show Code</a>
+<div class="indent-large" id="SOQL" style="display:none;">
+<pre class="prettyprint">
+string search = "FIND {International} IN NAME FIELDS RETURNING Campaign, Lead";
+</pre>
+
+</li>
+
+			<li>
+				Use your <code>SalesforceClient</code> instance to run your search query.
+			</li>
+
+			<li>
+				Convert the returned list of <code>SearchResult</code> objects to strings. To save time, a conversion method you
+				can use is given below.
+<pre class="prettyprint codeblock">
+string ToString(SearchResult result)
+{
+  return string.Format("[SearchResult: Type={0}, Url={1}, Id={2}]", result.Type, result.Url, result.Id);
+}
+</pre>
+			</li>
+
+            <li>
+                Call your new <code>GetSearchResultsAsync</code> method from the provided <code>Run</code> method.
+                Load the results into the <code>ItemsSource</code> property of the <code>ListView</code> that is declared inside
+                the <code>CampaignsPage</code> class.
+            </li>
+
+			<li>
+				Run your app on at least one platform to test your work. You can use the Salesforce web interface to
+				examine the Campaign and Lead Objects to verify the number of rows that contain the search term.
+			</li>
+
+			</ol>
+
+		<!-- ------------------------------------------------------------------------------------------------------------------------- -->
+
+		<h1>Summary</h1>
+		<p>
+			SOSL queries are useful to search across multiple tables at once. Note that to display useful results to the user
+			you would need to write some more code: you could use the Ids in the <code>SearchResult</code>s to run a SELECT
+			statement for each result and retrieve the matching table rows.
+		</p>
+
+		<div class="align-right">
+			<a href="../Start%20Here.html">Go Back</a>
+		</div>
+	</section>
+
+    <script src="./res/js/jquery.min.js"></script>
+    <script src="./res/js/prettify.js"></script>
+    <script src="./res/js/script.js"></script>
+
+    <footer>Copyright (C) 2018 Xamarin Inc., Microsoft.</footer>
+</body>
+</html>
